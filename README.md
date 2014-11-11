@@ -1,17 +1,17 @@
-Heroku Buildpack for Node.js and gulp.js
+Heroku Buildpack for Node.js, Gulp, Bower and Sass
 ========================================
 
 Usage
 -----
 
-- Set your Heroku app's buildpack URL to `https://github.com/appstack/heroku-buildpack-nodejs-gulp.git`. To be safe, you should really fork this and use your fork's URL.
+- Set your Heroku app's buildpack URL to `https://github.com/Gertrwde/heroku-buildpack-nodejs-bower-gulp-sass.git`. To be safe, you should really fork this and use your fork's URL.
 - Run `heroku labs:enable user-env-compile` to enable environment variable support
 - Run `heroku config:set NODE_ENV=production` to set your environment to `production` (or any other name)
-- Add a Gulp task called `heroku:production` that builds your app
+- Add a Gulp task called `heroku` that builds your app
 - Install the dependenies for serving the app: `npm install gzippo express --save`
-- Create a simple web server in the root called `web.js`:
+- Create a simple web server in the root called `heroku_web.js`:
 
-```
+```javascript
 var gzippo = require('gzippo');
 var express = require('express');
 var app = express();
@@ -24,7 +24,7 @@ app.listen(process.env.PORT || 5000);
 - Add a single line `Procfile` to the root to serve the app via node:
 
 ```
-web: node web.js
+web: node heroku_web.js
 ```
 
 Credits
