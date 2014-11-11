@@ -8,15 +8,16 @@ Usage
 - Run `heroku labs:enable user-env-compile` to enable environment variable support
 - Run `heroku config:set NODE_ENV=production` to set your environment to `production` (or any other name)
 - Add a Gulp task called `heroku` that builds your app
-- Install the dependenies for serving the app: `npm install gzippo express --save`
+- Install the dependenies for serving the app: `npm install gzippo express morgan --save`
 - Create a simple web server in the root called `heroku_web.js`:
 
 ```javascript
 var gzippo = require('gzippo');
+var logger = require('morgan');
 var express = require('express');
 var app = express();
 
-app.use(express.logger('dev'));
+app.use(logger('dev'));
 app.use(gzippo.staticGzip("" + __dirname + "/build"));
 app.listen(process.env.PORT || 5000);
 ```
