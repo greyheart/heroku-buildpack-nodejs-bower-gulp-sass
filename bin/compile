@@ -82,6 +82,11 @@ fi
     export_env_dir $env_dir
   fi
 
+  status "Clearing NPM cache"
+  rm -rf $build_dir/.npm
+  rm -rf /app/.npm
+  npm cache clear
+
   status "Installing dependencies"
   # Make npm output to STDOUT instead of its default STDERR
   npm install --userconfig $build_dir/.npmrc --production 2>&1 | indent
