@@ -136,6 +136,9 @@ fi
 status "Installing Sass and SCSS-lint"
 export GEM_HOME=$build_dir/.gem/ruby/1.9.1
 PATH="$GEM_HOME/bin:$PATH"
+status "Ruby version:"
+HOME=$build_dir ruby --version
+HOME=$build_dir gem install scss-lint --user-install --no-rdoc --no-ri
 if test -d $cache_dir/ruby/.gem; then
     status "Restoring ruby gems directory from cache"
     cp -r $cache_dir/ruby/.gem $build_dir
