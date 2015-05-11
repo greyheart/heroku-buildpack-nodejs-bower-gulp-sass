@@ -177,12 +177,27 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
 
     # Install bower locally
     npm install bower
+
+    if test -d $cache_dir/bower_components; then
+      status "Restoring bower_components directory from cache"
+      cp -r $cache_dir/bower_components $build_dir
+    fi
+
     echo "-----> Found bower.json, installing bower dependencies"
     $build_dir/node_modules/.bin/bower install
   else
     echo "-----> No bower.json found"
   fi
 )
+
+# cache bower_components
+rm -rf $cache_dir/bower_components
+
+# If app has a bower_components directory, cache it.
+if test -d $build_dir/bower_components; then
+  status "Caching bower_components directory for future builds"
+  cp -r $build_dir/bower_components $cache_dir
+fi
 
 # Check and run gulp
 (
