@@ -166,11 +166,23 @@ status "Building runtime environment"
 mkdir -p $build_dir/.profile.d
 echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\";" > $build_dir/.profile.d/nodejs.sh
 
-# Install bower locally
-npm install bower
+# Check and run bower
+(
+  if [ -f $build_dir/bower.json ]; then
+    # get the env vars
+    if [ -d "$env_dir" ]; then
+      status "Exporting config vars to environment"
+      export_env_dir $env_dir
+    fi
 
-# Install bower dependencies
-$build_dir/node_modules/.bin/bower install
+    # Install bower locally
+    npm install bower
+    echo "-----> Found bower.json, installing bower dependencies"
+    $build_dir/node_modules/.bin/bower install
+  else
+    echo "-----> No bower.json found"
+  fi
+)
 
 # Check and run gulp
 (
